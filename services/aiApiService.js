@@ -1,17 +1,14 @@
 import axios from 'axios';
+import { GEMINI_API_KEY } from '@env';
 
-// Utilizar Google Gemini como LLM para traducción
-// Necesitarás una clave API de Gemini
-const API_KEY = 'AIzaSyCx2PWJaG1MG_wbC1osBUmlYgUQJb0s-OA'; // Reemplaza con tu clave real
 // const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
-
 
 // Función para traducir usando Gemini
 export const translateWithAI = async (text) => {
   try {
     const response = await axios.post(
-      `${GEMINI_API_URL}?key=${API_KEY}`,
+      `${GEMINI_API_URL}?key=${GEMINI_API_KEY}`,
       {
         contents: [
           {

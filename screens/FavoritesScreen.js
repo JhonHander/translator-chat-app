@@ -59,20 +59,29 @@ const FavoritesScreen = ({ navigation }) => {
       <FlatList
         data={favorites}
         keyExtractor={(item) => item.id || item.timestamp}
-        renderItem={({ item }) => (
-          <View style={styles.itemContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.originalText}>{item.original}</Text>
-              <Text style={styles.translatedText}>{item.translated}</Text>
+        renderItem={({ item }) => {
+          // Depurar estructura para ver qué contiene
+          // console.log('Item en FavoritesScreen:', item);
+          
+          // Determinar qué campos mostrar basado en la estructura disponible
+          const originalText = item.original || item.text || '';
+          const translatedText = item.translated || (item.sender === 'bot' ? item.text : '') || '';
+          
+          return (
+            <View style={styles.itemContainer}>
+              <View style={styles.textContainer}>
+                <Text style={styles.originalText}>{originalText}</Text>
+                {/* <Text style={styles.translatedText}>{translatedText}</Text> */}
+              </View>
+              <TouchableOpacity
+                style={styles.favoriteButton}
+                onPress={() => handleRemoveFavorite(item.id)}
+              >
+                <Text style={styles.favoriteButtonText}>★</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={styles.favoriteButton}
-              onPress={() => handleRemoveFavorite(item.id)}
-            >
-              <Text style={styles.favoriteButtonText}>★</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+          );
+        }}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
     </View>
